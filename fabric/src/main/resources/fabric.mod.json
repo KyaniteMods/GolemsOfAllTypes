@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "goat",
+  "version": "${version}",
+  "name": "GolemsOfAllTypes",
+  "description": "Adds brand new unique golems to save time, and look cool!",
+  "authors": [
+    "Kyanite"
+  ],
+  "contact": {
+    "website": "https://kyanitemods.dev/"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.kyanite.goat.fabric.GolemsOfAllTypesFabric"
+    ]
+  },
+  "mixins": [
+    "goat.mixins.json",
+    "goat-common.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.9",
+    "minecraft": ">=1.19.2"
+  }
+}
