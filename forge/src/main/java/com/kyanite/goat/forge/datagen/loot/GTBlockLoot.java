@@ -17,6 +17,6 @@ import java.util.function.Supplier;
 public class GTBlockLoot extends BlockLoot {
     @Override
     protected void addTables() {
-
+        super.addTables();
     }
 }

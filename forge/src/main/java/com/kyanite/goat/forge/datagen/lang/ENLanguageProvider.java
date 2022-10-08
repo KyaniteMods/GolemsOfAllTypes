@@ -32,6 +32,8 @@ public class ENLanguageProvider extends LanguageProvider {
         RegistryHelperImpl.ITEMS.getEntries().stream().filter(item -> !(item.get() instanceof BlockItem)).forEach(this::addItem);
         RegistryHelperImpl.ENCHANTMENTS.getEntries().forEach(this::addEnchantment);
 
+        add("itemGroup.goat.goat", "Golems of All Types");
+        add("itemGroup.goat", "Golems of All Types");
     }
 
     @Override
@@ -42,32 +44,32 @@ public class ENLanguageProvider extends LanguageProvider {
 
     private void addBlock(RegistryObject<Block> block) {
         String key = block.getId().getPath();
-        super.add("block.deeperdarker." + key, convertToName(key));
+        super.add("block.goat." + key, convertToName(key));
     }
 
     private void addEffect(RegistryObject<MobEffect> effect) {
         String key = effect.getId().getPath();
-        super.add("effect.deeperdarker." + key, convertToName(key));
+        super.add("effect.goat." + key, convertToName(key));
     }
 
     private void addEntity(RegistryObject<EntityType<?>> item) {
         String key = item.getId().getPath();
-        super.add("entity.deeperdarker." + key, convertToName(key));
+        super.add("entity.goat." + key, convertToName(key));
     }
 
     private void addBiome(RegistryObject<Biome> item) {
         String key = item.getId().getPath();
-        super.add("biome.deeperdarker." + key, convertToName(key));
+        super.add("biome.goat." + key, convertToName(key));
     }
 
     private void addItem(RegistryObject<Item> item) {
         String key = item.getId().getPath();
-        super.add("item.deeperdarker." + key, convertToName(key));
+        super.add("item.goat." + key, convertToName(key));
     }
 
     private void addEnchantment(RegistryObject<Enchantment> item) {
         String key = item.getId().getPath();
-        super.add("enchantment.deeperdarker." + key, convertToName(key));
+        super.add("enchantment.goat." + key, convertToName(key));
     }
 
     private String convertToName(String key) {
@@ -80,9 +82,6 @@ public class ENLanguageProvider extends LanguageProvider {
         }
 
         String name = builder.toString();
-        if(name.contains("Chest Boat")) name = name.substring(0, name.indexOf("Chest")) + "Boat with Chest";
-        if(name.equals("Heart Of The Deep")) name = "Heart of the Deep";
-        if(name.equals("Sculk Stone Lapis Ore")) name = "Sculk Stone Lapis Lazuli Ore";
 
         return upsideDown ? toUpsideDown(name) : name;
     }

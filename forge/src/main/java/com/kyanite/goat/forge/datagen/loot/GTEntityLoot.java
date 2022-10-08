@@ -16,6 +16,6 @@ import java.util.stream.Stream;
 public class GTEntityLoot extends EntityLoot {
     @Override
     protected void addTables() {
-
+        super.addTables();
     }
 }

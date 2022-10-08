@@ -30,7 +30,7 @@ public class DataGeneration {
         generator.addProvider(event.includeClient(), new ENLanguageProvider(generator, "en_us", false));
         generator.addProvider(event.includeClient(), new ENLanguageProvider(generator, "en_ud", true));
 
-        generator.addProvider(event.includeServer(), new GTLootTableProvider(generator));
+   //     generator.addProvider(event.includeServer(), new GTLootTableProvider(generator));
 
         generator.addProvider(event.includeClient(), new GTBlockStateProvider(generator, fileHelper));
         generator.addProvider(event.includeClient(), new GTItemModelProvider(generator, fileHelper));

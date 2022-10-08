@@ -1,0 +1,5 @@
+// 1.19.2	2022-10-08T16:37:04.2527165	Block States: goat
+89ec0a76c4ad270caad8ec1251cf1423344bb98c assets/goat/blockstates/copper_button.json
+66d330cfd6bc390a6d9567831d6a432ad7e14649 assets/goat/models/block/copper_button.json
+b363653641fe0de9512720d08bb58a42c2c5e80a assets/goat/models/block/copper_button_inventory.json
+ab7a605679f59a7669e36474ae75ce605217db57 assets/goat/models/block/copper_button_pressed.json

@@ -1,6 +1,7 @@
 package com.kyanite.goat.forge.datagen.models;
 
 import com.kyanite.goat.GolemsOfAllTypes;
+import com.kyanite.goat.registry.blocks.GTBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -20,7 +21,7 @@ public class GTItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-
+        blockModel(GTBlocks.COPPER_BUTTON, "inventory");
     }
 
     public void blockModel(Supplier<? extends Block> block) {
