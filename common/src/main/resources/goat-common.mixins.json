@@ -1,9 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.kyanite.goat.mixin.forge",
+  "package": "com.kyanite.goat.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "LightningRodMixin",
+    "CarvedPumpkinBlockMixin"
   ],
   "client": [
   ],
