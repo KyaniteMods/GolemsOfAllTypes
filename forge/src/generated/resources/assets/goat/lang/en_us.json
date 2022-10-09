@@ -1,5 +1,8 @@
 {
   "block.goat.copper_button": "Copper Button",
+  "entity.goat.copper_golem": "Copper Golem",
+  "item.goat.copper_golem_spawn_egg": "Copper Golem Spawn Egg",
   "itemGroup.goat": "Golems of All Types",
-  "itemGroup.goat.goat": "Golems of All Types"
+  "itemGroup.goat.goat": "Golems of All Types",
+  "subtitles.entity.copper_golem.spin": "Copper Golem head spins"
 }

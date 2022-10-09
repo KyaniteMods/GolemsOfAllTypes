@@ -34,6 +34,8 @@ public class ENLanguageProvider extends LanguageProvider {
 
         add("itemGroup.goat.goat", "Golems of All Types");
         add("itemGroup.goat", "Golems of All Types");
+
+        add("subtitles.entity.copper_golem.spin", "Copper Golem head spins");
     }
 
     @Override

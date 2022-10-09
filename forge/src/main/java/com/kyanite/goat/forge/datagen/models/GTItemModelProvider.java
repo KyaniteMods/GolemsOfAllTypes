@@ -2,6 +2,7 @@ package com.kyanite.goat.forge.datagen.models;
 
 import com.kyanite.goat.GolemsOfAllTypes;
 import com.kyanite.goat.registry.blocks.GTBlocks;
+import com.kyanite.goat.registry.items.GTItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -22,6 +23,7 @@ public class GTItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         blockModel(GTBlocks.COPPER_BUTTON, "inventory");
+        withExistingParent(getName(GTItems.COPPER_GOLEM_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
     }
 
     public void blockModel(Supplier<? extends Block> block) {

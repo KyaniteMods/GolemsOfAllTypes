@@ -1,0 +1,8 @@
+{
+  "entity.copper_golem.spin": {
+    "sounds": [
+      "goat:copper_golem/spin"
+    ],
+    "subtitle": "subtitles.entity.copper_golem.spin"
+  }
+}

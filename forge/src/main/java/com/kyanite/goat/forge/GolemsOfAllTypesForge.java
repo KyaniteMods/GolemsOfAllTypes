@@ -1,16 +1,26 @@
 package com.kyanite.goat.forge;
 
 import com.kyanite.goat.GolemsOfAllTypes;
+import com.kyanite.goat.client.rendering.CopperGolemRenderer;
 import com.kyanite.goat.platform.forge.RegistryHelperImpl;
+import com.kyanite.goat.registry.entities.GTEntities;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Mod(GolemsOfAllTypes.MOD_ID)
 public class GolemsOfAllTypesForge {
@@ -30,7 +40,15 @@ public class GolemsOfAllTypesForge {
         RegistryHelperImpl.PLACED_FEATURES.register(bus);
         RegistryHelperImpl.BIOMES.register(bus);
 
+        bus.addListener(this::attributes);
+
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    public void attributes(EntityAttributeCreationEvent event) {
+        Map<EntityType<? extends LivingEntity>, AttributeSupplier.Builder> attributes = new HashMap<>();
+        GolemsOfAllTypes.attributes(attributes);
+        attributes.forEach((entity, builder) -> event.put(entity, builder.build()));
     }
 
     @Mod.EventBusSubscriber(modid = GolemsOfAllTypes.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -47,7 +65,7 @@ public class GolemsOfAllTypesForge {
     public static class GolemsOfAllTypesClient {
         @SubscribeEvent
         public static void clientSetup(final FMLClientSetupEvent event) {
-            // Entity renderer registry
+            EntityRenderers.register(GTEntities.COPPER_GOLEM.get(), CopperGolemRenderer::new);
         }
     }
 }

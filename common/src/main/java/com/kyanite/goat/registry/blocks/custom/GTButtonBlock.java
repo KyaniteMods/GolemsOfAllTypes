@@ -26,7 +26,7 @@ public class GTButtonBlock extends ButtonBlock {
     }
 
     @Override
-    protected SoundEvent getSound(boolean bl) {
+    public SoundEvent getSound(boolean bl) {
         return bl ? SoundEvents.STONE_BUTTON_CLICK_ON : SoundEvents.STONE_BUTTON_CLICK_OFF;
     }
 }

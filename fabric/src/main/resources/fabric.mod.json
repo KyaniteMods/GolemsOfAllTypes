@@ -16,6 +16,9 @@
   "entrypoints": {
     "main": [
       "com.kyanite.goat.fabric.GolemsOfAllTypesFabric"
+    ],
+    "client": [
+      "com.kyanite.goat.fabric.GolemsOfAllTypesFabricClient"
     ]
   },
   "mixins": [

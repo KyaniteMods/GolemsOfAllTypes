@@ -1,5 +1,8 @@
 {
   "block.goat.copper_button": "uoʇʇnᗺ ɹǝddoƆ",
+  "entity.goat.copper_golem": "ɯǝןo⅁ ɹǝddoƆ",
+  "item.goat.copper_golem_spawn_egg": "bbƎ uʍɐdS ɯǝןo⅁ ɹǝddoƆ",
   "itemGroup.goat": "sǝdʎ⟘ ןןⱯ ɟo sɯǝןo⅁",
-  "itemGroup.goat.goat": "sǝdʎ⟘ ןןⱯ ɟo sɯǝןo⅁"
+  "itemGroup.goat.goat": "sǝdʎ⟘ ןןⱯ ɟo sɯǝןo⅁",
+  "subtitles.entity.copper_golem.spin": "suıds pɐǝɥ ɯǝןo⅁ ɹǝddoƆ"
 }
