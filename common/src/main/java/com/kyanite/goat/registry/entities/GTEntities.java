@@ -11,12 +11,12 @@ import java.util.function.Supplier;
 public class GTEntities {
     public static final Supplier<EntityType<CopperGolem>> COPPER_GOLEM = RegistryHelper.registerEntity(
             "copper_golem",
-            CopperGolem::new, MobCategory.MISC, 0.6f, 0.6f, 20
+            CopperGolem::new, MobCategory.CREATURE, 0.6f, 0.6f, 20
     );
 
     public static final Supplier<EntityType<TuffGolem>> TUFF_GOLEM = RegistryHelper.registerEntity(
             "tuff_golem",
-            TuffGolem::new, MobCategory.MISC, 0.6f, 0.6f, 20
+            TuffGolem::new, MobCategory.CREATURE, 0.6f, 0.6f, 20
     );
 
     public static void register() {}

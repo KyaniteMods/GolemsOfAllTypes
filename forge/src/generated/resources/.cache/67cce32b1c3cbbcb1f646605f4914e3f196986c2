@@ -1,0 +1,4 @@
+// 1.19.2	2022-10-09T12:35:11.346842	LootTables
+ba655c89adca425b83c9b61e4131aba7ab98e241 data/goat/loot_tables/blocks/copper_button.json
+fda09f824883b27c40818381fed390822e25561c data/goat/loot_tables/entities/copper_golem.json
+3c346463edb9c43bdf28f318e14e6e108475d41c data/goat/loot_tables/entities/tuff_golem.json

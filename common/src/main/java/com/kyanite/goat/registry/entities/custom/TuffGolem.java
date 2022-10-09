@@ -25,6 +25,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -49,12 +50,12 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.EnumSet;
 import java.util.List;
 
-public class TuffGolem extends PathfinderMob implements IAnimatable {
+public class TuffGolem extends AbstractGolem implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);
 
     protected static final EntityDataAccessor<Integer> TIME = SynchedEntityData.defineId(TuffGolem.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(TuffGolem.class, EntityDataSerializers.BOOLEAN);
-    public TuffGolem(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
+    public TuffGolem(EntityType<? extends AbstractGolem> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setCanPickUpLoot(true);
     }

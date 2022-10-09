@@ -1,6 +1,7 @@
 package com.kyanite.goat.forge.datagen.tags;
 
 import com.kyanite.goat.GolemsOfAllTypes;
+import com.kyanite.goat.registry.blocks.GTBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.tags.BlockTags;
@@ -17,7 +18,7 @@ public class GTBlockTagsProvider extends BlockTagsProvider {
     @SuppressWarnings("unchecked")
     @Override
     protected void addTags() {
-        super.addTags();
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(GTBlocks.COPPER_BUTTON.get());
     }
 
     @NotNull
