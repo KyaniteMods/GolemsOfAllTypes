@@ -54,9 +54,6 @@ public class TuffGolem extends PathfinderMob implements IAnimatable {
 
     protected static final EntityDataAccessor<Integer> TIME = SynchedEntityData.defineId(TuffGolem.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(TuffGolem.class, EntityDataSerializers.BOOLEAN);
-
-    public PanicGoal panicGoal;
-
     public TuffGolem(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setCanPickUpLoot(true);
@@ -74,8 +71,7 @@ public class TuffGolem extends PathfinderMob implements IAnimatable {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(3, new FloatGoal(this));
-        panicGoal = new PanicGoal(this, 1.8f);;
-        this.goalSelector.addGoal(4, panicGoal);
+        this.goalSelector.addGoal(4, new PanicGoal(this, 1.8f));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.1f));
         this.goalSelector.addGoal(7, new FindAndTakeItemGoal(this));
         this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
@@ -155,8 +151,17 @@ public class TuffGolem extends PathfinderMob implements IAnimatable {
         if(hasItem()) {
             player.addItem(getMainHandItem());
             this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+            return InteractionResult.SUCCESS;
         }
 
+        if(canHoldItem(stack)) {
+            if(stack.getCount() > 1) {
+                this.dropItemStack(stack.split(stack.getCount() - 1));
+            }
+
+            this.setItemSlot(EquipmentSlot.MAINHAND, stack.split(1));
+            return InteractionResult.SUCCESS;
+        }
         return super.mobInteract(player, interactionHand);
     }
 
@@ -184,7 +189,7 @@ public class TuffGolem extends PathfinderMob implements IAnimatable {
     @Override
     public boolean canHoldItem(ItemStack pStack) {
         ItemStack itemstack = this.getItemBySlot(EquipmentSlot.MAINHAND);
-        return itemstack.isEmpty() && !isSleeping() && !panicGoal.isRunning();
+        return itemstack.isEmpty() && !isSleeping();
     }
 
     @Override
@@ -226,20 +231,20 @@ public class TuffGolem extends PathfinderMob implements IAnimatable {
 
         @Override
         public boolean canUse() {
-            if (!golem.hasItem() || golem.panicGoal.isRunning()) {
+            if (!golem.hasItem()) {
                 return false;
             } else {
                 List<ItemEntity> list = golem.level.getEntitiesOfClass(ItemEntity.class, golem.getBoundingBox().inflate(20,20,20));
-                return !list.isEmpty() && !golem.hasItem() && !golem.panicGoal.isRunning();
+                return !list.isEmpty() && !golem.hasItem();
             }
         }
 
         @Override
         public void tick() {
             List<ItemEntity> list = golem.level.getEntitiesOfClass(ItemEntity.class, golem.getBoundingBox().inflate(20,20,20));
-            if(!list.isEmpty() && !golem.hasItem() && !golem.panicGoal.isRunning()) golem.getNavigation().moveTo(list.get(0), 1.3F);
+            if(!list.isEmpty() && !golem.hasItem()) golem.getNavigation().moveTo(list.get(0), 1.3F);
 
-            if(golem.getNavigation().isDone() && !golem.hasItem() && !golem.panicGoal.isRunning()) {
+            if(golem.getNavigation().isDone() && !golem.hasItem()) {
                 golem.pickUpItem(list.get(0));
             }
         }

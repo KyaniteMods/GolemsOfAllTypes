@@ -107,8 +107,6 @@ public class CopperGolem extends PathfinderMob implements IAnimatable {
 
         if (random.nextFloat() < 0.05688889F && this.entityData.get(WAXED) == false) {
             setOxidation(getOxidation() + 1);
-            GolemsOfAllTypes.LOGGER.info(String.valueOf(getOxidation()));
-            GolemsOfAllTypes.LOGGER.info(getDegradationLevel().name());
         }
 
         int headSpinTime = getHeadSpin();
