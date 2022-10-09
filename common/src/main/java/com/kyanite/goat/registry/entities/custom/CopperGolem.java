@@ -61,7 +61,7 @@ public class CopperGolem extends PathfinderMob implements IAnimatable {
     }
 
     public static AttributeSupplier.Builder attributes() {
-        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 2.0D).add(Attributes.MOVEMENT_SPEED, 0.15f).add(Attributes.ATTACK_DAMAGE, 1.0D);
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 5.5D).add(Attributes.MOVEMENT_SPEED, 0.15f).add(Attributes.ATTACK_DAMAGE, 1.0D);
     }
 
     @Override
@@ -72,15 +72,11 @@ public class CopperGolem extends PathfinderMob implements IAnimatable {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1f));
-        this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new FindAndPressCopperButtonGoal(this, 2f, 45));
-        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 10));
-    }
-
-    @Override
-    protected float nextStep() {
-        return super.nextStep() - 0.35f;
+        this.goalSelector.addGoal(2, new PanicGoal(this, 2f));
+        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1f));
+        this.goalSelector.addGoal(1, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(9, new FindAndPressCopperButtonGoal(this, 1.3f, 45));
+        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 10));
     }
 
     @Override
@@ -215,6 +211,11 @@ public class CopperGolem extends PathfinderMob implements IAnimatable {
     public void tick() {
         super.tick();
         if(getDegradationLevel().equals(WeatheringCopper.WeatherState.OXIDIZED)) return;
+        
+        switch(getDegradationLevel()) {
+            case EXPOSED -> setSpeed(getSpeed() - 0.5f);
+            case WEATHERED -> setSpeed(getSpeed() - 1);
+        }
 
         if(random.nextInt(0, 300) == 0 && getHeadSpin() == 0) {
             entityData.set(SPIN_TIME, 10);
