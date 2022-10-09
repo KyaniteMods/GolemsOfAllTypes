@@ -24,6 +24,7 @@ public class GTItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         blockModel(GTBlocks.COPPER_BUTTON, "inventory");
         withExistingParent(getName(GTItems.COPPER_GOLEM_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
+        withExistingParent(getName(GTItems.TUFF_GOLEM_SPAWN_EGG), mcLoc("item/template_spawn_egg"));
     }
 
     public void blockModel(Supplier<? extends Block> block) {

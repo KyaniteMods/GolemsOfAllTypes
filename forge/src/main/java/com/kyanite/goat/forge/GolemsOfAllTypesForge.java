@@ -2,6 +2,7 @@ package com.kyanite.goat.forge;
 
 import com.kyanite.goat.GolemsOfAllTypes;
 import com.kyanite.goat.client.rendering.CopperGolemRenderer;
+import com.kyanite.goat.client.rendering.TuffGolemRenderer;
 import com.kyanite.goat.platform.forge.RegistryHelperImpl;
 import com.kyanite.goat.registry.entities.GTEntities;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -66,6 +67,7 @@ public class GolemsOfAllTypesForge {
         @SubscribeEvent
         public static void clientSetup(final FMLClientSetupEvent event) {
             EntityRenderers.register(GTEntities.COPPER_GOLEM.get(), CopperGolemRenderer::new);
+            EntityRenderers.register(GTEntities.TUFF_GOLEM.get(), TuffGolemRenderer::new);
         }
     }
 }
