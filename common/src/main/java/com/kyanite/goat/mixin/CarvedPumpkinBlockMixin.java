@@ -6,6 +6,7 @@ import com.kyanite.goat.registry.entities.custom.TuffGolem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarvedPumpkinBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,12 +20,11 @@ public class CarvedPumpkinBlockMixin {
     @Inject(method = "onPlace", at = @At("TAIL"), cancellable = true)
     public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl, CallbackInfo ci) {
         if(level.getBlockState(blockPos.below()).is(BlockTags.WOOL) && level.getBlockState(blockPos.below(2)).is(Blocks.TUFF)) {
+            Block woolBlock = level.getBlockState(blockPos.below()).getBlock();
             level.destroyBlock(blockPos.below(), false);
             level.destroyBlock(blockPos.below(2), false);
             level.destroyBlock(blockPos, false);
-            TuffGolem tuffGolem = GTEntities.TUFF_GOLEM.get().create(level);
-            tuffGolem.moveTo(blockPos.below(), 0, 0);
-            level.addFreshEntity(tuffGolem);
+            TuffGolem tuffGolem = TuffGolem.summon(level, blockPos.below(), woolBlock);
         }
     }
 }

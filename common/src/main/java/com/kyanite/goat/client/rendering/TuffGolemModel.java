@@ -18,7 +18,7 @@ public class TuffGolemModel extends AnimatedGeoModel<TuffGolem> {
 
     @Override
     public ResourceLocation getTextureResource(TuffGolem object) {
-        return new ResourceLocation(GolemsOfAllTypes.MOD_ID, "textures/entity/tuff_golem.png");
+        return new ResourceLocation(GolemsOfAllTypes.MOD_ID, "textures/entity/tuff_golem/tuff_golem_red.png");
     }
 
     @Override

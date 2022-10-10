@@ -3,6 +3,7 @@ package com.kyanite.goat.registry.entities.custom;
 import com.kyanite.goat.GolemsOfAllTypes;
 import com.kyanite.goat.registry.blocks.GTBlocks;
 import com.kyanite.goat.registry.blocks.custom.GTButtonBlock;
+import com.kyanite.goat.registry.entities.GTEntities;
 import com.kyanite.goat.registry.sounds.GTSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -34,6 +35,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.BlockState;
@@ -55,6 +57,7 @@ public class TuffGolem extends AbstractGolem implements IAnimatable {
 
     protected static final EntityDataAccessor<Integer> TIME = SynchedEntityData.defineId(TuffGolem.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(TuffGolem.class, EntityDataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<String> WOOL_TYPE = SynchedEntityData.defineId(TuffGolem.class, EntityDataSerializers.STRING);
     public TuffGolem(EntityType<? extends AbstractGolem> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setCanPickUpLoot(true);
@@ -79,6 +82,15 @@ public class TuffGolem extends AbstractGolem implements IAnimatable {
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 10));
     }
 
+    public static TuffGolem summon(Level level, BlockPos pos, Block woolBlock) {
+        TuffGolem tuffGolem = GTEntities.TUFF_GOLEM.get().create(level);
+        String woolType = woolBlock.getDescriptionId().replace("block.minecraft.", "").replace("_wool", "");
+        tuffGolem.moveTo(pos, 0, 0);
+        tuffGolem.setWoolType(woolType);
+        level.addFreshEntity(tuffGolem);
+        GolemsOfAllTypes.LOGGER.info(woolType);
+        return tuffGolem;
+    }
 
     @Nullable
     @Override
@@ -97,6 +109,7 @@ public class TuffGolem extends AbstractGolem implements IAnimatable {
         super.defineSynchedData();
         this.entityData.define(TIME, random.nextInt(400, 1100));
         this.entityData.define(SLEEPING, false);
+        this.entityData.define(WOOL_TYPE, "red");
     }
 
     @Override
@@ -108,6 +121,14 @@ public class TuffGolem extends AbstractGolem implements IAnimatable {
             setSleeping(!isSleeping());
             this.entityData.set(TIME, random.nextInt(400, 1100));
         }
+    }
+
+    public void setWoolType(String type) {
+        this.entityData.set(WOOL_TYPE, type);
+    }
+
+    public String getWoolType() {
+        return this.entityData.get(WOOL_TYPE);
     }
 
     public void setSleeping(boolean value) {
@@ -136,14 +157,16 @@ public class TuffGolem extends AbstractGolem implements IAnimatable {
     public void addAdditionalSaveData(CompoundTag compoundTag) {
         super.addAdditionalSaveData(compoundTag);
         compoundTag.putInt("Time", this.entityData.get(TIME));
-        compoundTag.putBoolean("Sleeping", this.entityData.get(SLEEPING));
+        compoundTag.putBoolean("Sleeping", isSleeping());
+        compoundTag.putString("WoolType", getWoolType());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.entityData.set(TIME, compoundTag.getInt("Time"));
-        this.entityData.set(SLEEPING, compoundTag.getBoolean("Sleeping"));
+        setSleeping(compoundTag.getBoolean("Sleeping"));
+        setWoolType(compoundTag.getString("WoolType"));
     }
 
     @Override

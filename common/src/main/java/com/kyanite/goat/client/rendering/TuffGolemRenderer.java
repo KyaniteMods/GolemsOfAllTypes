@@ -23,8 +23,9 @@ public class TuffGolemRenderer extends GeoEntityRenderer<TuffGolem> {
         this.addLayer(new TuffGolemItemRenderer(this, renderManager.getItemInHandRenderer()));
     }
 
+    @Override
     public ResourceLocation getTextureLocation(TuffGolem entity) {
-        return getGeoModelProvider().getTextureResource(entity);
+        return new ResourceLocation(GolemsOfAllTypes.MOD_ID, "textures/entity/tuff_golem/tuff_golem_" + entity.getWoolType() + ".png");
     }
 
     @Override
