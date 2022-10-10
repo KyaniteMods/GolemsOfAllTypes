@@ -73,6 +73,16 @@ public class TuffGolem extends AbstractGolem implements IAnimatable {
     }
 
     @Override
+    public boolean hurt(DamageSource damageSource, float f) {
+        if(isDeadOrDying()) {
+            if(hasItem()) {
+                dropItemStack(this.getMainHandItem());
+            }
+        }
+        return super.hurt(damageSource, f);
+    }
+
+    @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(2, new PanicGoal(this, 1.8f));

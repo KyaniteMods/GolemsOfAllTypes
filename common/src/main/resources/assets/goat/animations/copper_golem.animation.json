@@ -243,67 +243,6 @@
 				}
 			}
 		},
-		"animation.copper.secret": {
-			"loop": true,
-			"animation_length": 1.5,
-			"bones": {
-				"CopperGolem": {
-					"position": {
-						"vector": [0, -2, 0]
-					}
-				},
-				"Body": {
-					"rotation": {
-						"vector": [-20, 0, 0]
-					}
-				},
-				"LeftArm": {
-					"rotation": {
-						"vector": [-39.8674, 40.24635, -62.75595]
-					},
-					"position": {
-						"vector": [0, -1, 2]
-					}
-				},
-				"RightArm": {
-					"rotation": {
-						"vector": [-39.83333, -42.934, 75.98697]
-					},
-					"position": {
-						"vector": [0, -1.25, 1.5]
-					}
-				},
-				"LeftLeg": {
-					"rotation": {
-						"vector": [-87.47846, -7.49282, -0.32902]
-					},
-					"position": {
-						"vector": [0, 0.5, -2]
-					}
-				},
-				"RightLeg": {
-					"rotation": {
-						"vector": [-87.47846, 7.49282, 0.32902]
-					},
-					"position": {
-						"vector": [0, 0.5, -2]
-					}
-				},
-				"Head": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, "- 371.67", 0]
-						},
-						"1.5": {
-							"vector": [0, 371.67, 0]
-						}
-					},
-					"position": {
-						"vector": [0, 0, 1.5]
-					}
-				}
-			}
-		},
 		"animation.copper.idle": {
 			"loop": true,
 			"animation_length": 1.5,

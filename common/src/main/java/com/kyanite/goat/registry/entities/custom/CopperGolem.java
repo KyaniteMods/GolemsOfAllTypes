@@ -59,8 +59,10 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);
     private static final EntityDataAccessor<Integer> SPIN_TIME = SynchedEntityData.defineId(CopperGolem.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> OXIDATION = SynchedEntityData.defineId(CopperGolem.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Integer> PRESS_TICKS = SynchedEntityData.defineId(CopperGolem.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> WAXED = SynchedEntityData.defineId(CopperGolem.class, EntityDataSerializers.BOOLEAN);
 
+    public int pressAnimationTicks = 0;
     public CopperGolem(EntityType<? extends AbstractGolem> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -90,6 +92,12 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
 
         if (random.nextFloat() < 0.05688889F && this.entityData.get(WAXED) == false) {
             setOxidation(getOxidation() + 1);
+        }
+
+        GolemsOfAllTypes.LOGGER.info(String.valueOf(this.entityData.get(PRESS_TICKS)));
+
+        if(this.entityData.get(PRESS_TICKS) > 0) {
+            setPressTicks(this.entityData.get(PRESS_TICKS) -1);
         }
 
         int headSpinTime = getHeadSpin();
@@ -124,6 +132,7 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
         this.entityData.define(SPIN_TIME, 0);
         this.entityData.define(OXIDATION, 0);
         this.entityData.define(WAXED, false);
+        this.entityData.define(PRESS_TICKS, 0);
     }
 
     @Override
@@ -188,6 +197,10 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
         }
     }
 
+    public void setPressTicks(int value) {
+        this.entityData.set(PRESS_TICKS, value);
+    }
+
     public void setDegradationLevel(WeatheringCopper.WeatherState level) {
         setOxidation(level.ordinal() * 70);
     }
@@ -236,7 +249,12 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if(getDegradationLevel() != WeatheringCopper.WeatherState.OXIDIZED) {
+        if(this.entityData.get(PRESS_TICKS) > 0) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.copper.press", true));
+            return PlayState.CONTINUE;
+        }
+
+        if(getDegradationLevel() == WeatheringCopper.WeatherState.OXIDIZED) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.copper.oxidized", true));
             return PlayState.CONTINUE;
         }
@@ -278,6 +296,7 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
             if(mob.blockPosition().getY() == blockPos.getY() && mob.distanceToSqr(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < 3 && random.nextInt(0, 50) == 0) {
                 GTButtonBlock buttonBlock = (GTButtonBlock) level.getBlockState(blockPos).getBlock();
                 if(level.getBlockState(blockPos).getValue(ButtonBlock.POWERED) == false) {
+                    ((CopperGolem)mob).setPressTicks(20);
                     ((ButtonBlock)level.getBlockState(blockPos).getBlock()).press(level.getBlockState(blockPos), mob.getLevel(), blockPos);
                     level.playSound(null, blockPos, buttonBlock.getSound(true), SoundSource.BLOCKS, 0.3F, 0.6F);
                 }
