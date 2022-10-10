@@ -52,6 +52,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.EnumSet;
+import java.util.stream.Stream;
 
 // Credit to https://github.com/Sollace/CopperGolem for some code related to Oxidization.
 public class CopperGolem extends AbstractGolem implements IAnimatable {
@@ -86,25 +87,6 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
     @Override
     public void aiStep() {
         super.aiStep();
-
-        if(getDegradationLevel().equals(WeatheringCopper.WeatherState.OXIDIZED) && this.goalSelector.getRunningGoals().count() != 0) {
-            for (Goal goal : this.goalSelector.getRunningGoals().toList()) {
-                goal.stop();
-            }
-
-            this.getNavigation().setSpeedModifier(0);
-            this.getNavigation().stop();
-
-            this.jumping = false;
-            this.walkDistO = 0;
-            this.walkDist = 0;
-            this.xxa = 0;
-            this.yya = 0;
-            this.setSpeed(0.0F);
-            this.setDeltaMovement(Vec3.ZERO);
-            this.hasImpulse = false;
-            return;
-        }
 
         if (random.nextFloat() < 0.05688889F && this.entityData.get(WAXED) == false) {
             setOxidation(getOxidation() + 1);
@@ -188,17 +170,26 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
 
     public void setOxidation(int oxidation) {
         this.entityData.set(OXIDATION, Mth.clamp(oxidation, 0, (WeatheringCopper.WeatherState.values().length - 1) * 70));
+        if(getDegradationLevel().equals(WeatheringCopper.WeatherState.OXIDIZED) && this.goalSelector.getRunningGoals().count() != 0) {
+            this.goalSelector.removeAllGoals();
+
+            this.getNavigation().stop();
+
+            this.setSpeed(0.0F);
+            this.setDeltaMovement(Vec3.ZERO);
+            return;
+        }
+
+        if(getDegradationLevel() != WeatheringCopper.WeatherState.OXIDIZED && this.goalSelector.getRunningGoals().count() == 0) {
+            registerGoals();
+
+            this.setSpeed(0.15f);
+            return;
+        }
     }
 
     public void setDegradationLevel(WeatheringCopper.WeatherState level) {
         setOxidation(level.ordinal() * 70);
-        if(getDegradationLevel() != WeatheringCopper.WeatherState.OXIDIZED && this.goalSelector.getRunningGoals().count() == 0) {
-            for (Goal goal : this.goalSelector.getAvailableGoals()) {
-                goal.start();
-            }
-
-            this.setSpeed(0.15f);
-        }
     }
     public int getOxidation() {
         return this.entityData.get(OXIDATION);
@@ -245,11 +236,15 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.copper_golem.walk", true));
+        if(getDegradationLevel() != WeatheringCopper.WeatherState.OXIDIZED) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.copper.oxidized", true));
             return PlayState.CONTINUE;
         }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.copper_golem.idle", true));
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.copper.walk", true));
+            return PlayState.CONTINUE;
+        }
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.copper.idle", true));
         return PlayState.CONTINUE;
     }
 
@@ -266,12 +261,16 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
         return this.entityData.get(SPIN_TIME);
     }
 
+    @Override
+    public boolean isPushable() {
+        return getDegradationLevel().equals(WeatheringCopper.WeatherState.OXIDIZED) ? false : super.isPushable();
+    }
+
     public class FindAndPressCopperButtonGoal extends MoveToBlockGoal {
 
         public FindAndPressCopperButtonGoal(PathfinderMob pathfinderMob, double d, int i) {
             super(pathfinderMob, d, i);
         }
-
 
         @Override
         public void tick() {

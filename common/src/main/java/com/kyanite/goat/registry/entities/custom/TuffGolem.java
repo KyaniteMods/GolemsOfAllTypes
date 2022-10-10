@@ -128,25 +128,27 @@ public class TuffGolem extends AbstractGolem implements IAnimatable {
     }
 
     public String getWoolType() {
+        if(this.entityData.get(WOOL_TYPE).isEmpty()) return "red";
         return this.entityData.get(WOOL_TYPE);
+    }
+
+    @Override
+    public boolean isPushable() {
+        return isSleeping() ? false : super.isPushable();
     }
 
     public void setSleeping(boolean value) {
         this.entityData.set(SLEEPING, value);
         if(isSleeping()) {
-            this.setNoAi(true);
-            this.setSpeed(0);
+            this.goalSelector.removeAllGoals();
 
-            for (Goal goal : this.goalSelector.getRunningGoals().toList()) {
-                goal.stop();
-            }
+            this.getNavigation().stop();
+
+            this.setSpeed(0.0F);
+
         }else{
-            this.setNoAi(false);
+            registerGoals();
             this.setSpeed(0.15f);
-
-            for (Goal goal : this.goalSelector.getRunningGoals().toList()) {
-                goal.start();
-            }
         }
     }
     public boolean isSleeping() {
