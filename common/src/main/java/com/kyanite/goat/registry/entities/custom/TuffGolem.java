@@ -198,7 +198,7 @@ public class TuffGolem extends AbstractGolem implements IAnimatable {
 
     public String getIdleAnimId() {
         if(isSleeping()) {
-            return hasItem() ? "animation.tuff.holdIdleSit" : "animation.tuff.sitidle";
+            return hasItem() ? "animation.tuff.holdidle_sit" : "animation.tuff.idle_sit";
         }else{
             return hasItem() ? "animation.tuff.holdidle" : "animation.tuff.idle";
         }
