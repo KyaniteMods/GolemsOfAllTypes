@@ -51,6 +51,8 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import java.util.EnumSet;
+
 // Credit to https://github.com/Sollace/CopperGolem for some code related to Oxidization.
 public class CopperGolem extends AbstractGolem implements IAnimatable {
     private final AnimationFactory factory = new AnimationFactory(this);
@@ -73,21 +75,19 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new FindAndPressCopperButtonGoal(this, 1.3f, 45));
         this.goalSelector.addGoal(2, new PanicGoal(this, 2f));
-        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1f));
-        this.goalSelector.addGoal(1, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(9, new FindAndPressCopperButtonGoal(this, 1.3f, 45));
-        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 10));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1f));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 10));
     }
 
     @Override
     public void aiStep() {
         super.aiStep();
 
-        if(getDegradationLevel().equals(WeatheringCopper.WeatherState.OXIDIZED) && !isNoAi()) {
-            this.setNoAi(true);
-
+        if(getDegradationLevel().equals(WeatheringCopper.WeatherState.OXIDIZED) && this.goalSelector.getRunningGoals().count() != 0) {
             for (Goal goal : this.goalSelector.getRunningGoals().toList()) {
                 goal.stop();
             }
@@ -101,7 +101,6 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
             this.xxa = 0;
             this.yya = 0;
             this.setSpeed(0.0F);
-            this.setHealth(1);
             this.setDeltaMovement(Vec3.ZERO);
             this.hasImpulse = false;
             return;
@@ -193,6 +192,13 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
 
     public void setDegradationLevel(WeatheringCopper.WeatherState level) {
         setOxidation(level.ordinal() * 70);
+        if(getDegradationLevel() != WeatheringCopper.WeatherState.OXIDIZED && this.goalSelector.getRunningGoals().count() == 0) {
+            for (Goal goal : this.goalSelector.getAvailableGoals()) {
+                goal.start();
+            }
+
+            this.setSpeed(0.15f);
+        }
     }
     public int getOxidation() {
         return this.entityData.get(OXIDATION);
@@ -270,7 +276,7 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
         @Override
         public void tick() {
             super.tick();
-            if(mob.distanceToSqr(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < 5 && random.nextInt(0, 50) == 0) {
+            if(mob.blockPosition().getY() == blockPos.getY() && mob.distanceToSqr(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < 3 && random.nextInt(0, 50) == 0) {
                 GTButtonBlock buttonBlock = (GTButtonBlock) level.getBlockState(blockPos).getBlock();
                 if(level.getBlockState(blockPos).getValue(ButtonBlock.POWERED) == false) {
                     ((ButtonBlock)level.getBlockState(blockPos).getBlock()).press(level.getBlockState(blockPos), mob.getLevel(), blockPos);
