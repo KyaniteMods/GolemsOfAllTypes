@@ -62,7 +62,6 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
     protected static final EntityDataAccessor<Integer> PRESS_TICKS = SynchedEntityData.defineId(CopperGolem.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Boolean> WAXED = SynchedEntityData.defineId(CopperGolem.class, EntityDataSerializers.BOOLEAN);
 
-    public int pressAnimationTicks = 0;
     public CopperGolem(EntityType<? extends AbstractGolem> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
