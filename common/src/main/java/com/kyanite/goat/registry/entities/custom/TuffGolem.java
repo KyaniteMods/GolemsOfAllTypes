@@ -98,7 +98,6 @@ public class TuffGolem extends AbstractGolem implements IAnimatable {
         tuffGolem.moveTo(pos, 0, 0);
         tuffGolem.setWoolType(woolType);
         level.addFreshEntity(tuffGolem);
-        GolemsOfAllTypes.LOGGER.info(woolType);
         return tuffGolem;
     }
 

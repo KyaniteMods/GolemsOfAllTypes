@@ -94,8 +94,6 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
             setOxidation(getOxidation() + 1);
         }
 
-        GolemsOfAllTypes.LOGGER.info(String.valueOf(this.entityData.get(PRESS_TICKS)));
-
         if(this.entityData.get(PRESS_TICKS) > 0) {
             setPressTicks(this.entityData.get(PRESS_TICKS) -1);
         }

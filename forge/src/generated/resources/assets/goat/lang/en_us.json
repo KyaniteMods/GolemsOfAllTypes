@@ -1,7 +1,9 @@
 {
   "block.goat.copper_button": "Copper Button",
+  "entity.goat.chest_golem": "Chest Golem",
   "entity.goat.copper_golem": "Copper Golem",
   "entity.goat.tuff_golem": "Tuff Golem",
+  "item.goat.chest_golem_spawn_egg": "Chest Golem Spawn Egg",
   "item.goat.copper_golem_spawn_egg": "Copper Golem Spawn Egg",
   "item.goat.tuff_golem_spawn_egg": "Tuff Golem Spawn Egg",
   "itemGroup.goat": "Golems of All Types",

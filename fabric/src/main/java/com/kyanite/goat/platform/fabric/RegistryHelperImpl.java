@@ -13,6 +13,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,6 +31,11 @@ import java.util.function.Supplier;
 public class RegistryHelperImpl {
     public static <T extends Block> Supplier<T> registerBlock(String name, Supplier<T> block) {
         T registry = Registry.register(Registry.BLOCK, new ResourceLocation(GolemsOfAllTypes.MOD_ID, name), block.get());
+        return () -> registry;
+    }
+
+    public static <T extends MenuType<?>> Supplier<T> registerContainer(String name, Supplier<T> menuType) {
+        T registry = Registry.register(Registry.MENU, new ResourceLocation(GolemsOfAllTypes.MOD_ID, name), menuType.get());
         return () -> registry;
     }
 

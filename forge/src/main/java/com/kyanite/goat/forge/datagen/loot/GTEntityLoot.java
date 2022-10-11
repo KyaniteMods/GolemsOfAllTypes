@@ -27,6 +27,7 @@ public class GTEntityLoot extends EntityLoot {
                 LootPool.lootPool().add(LootItem.lootTableItem(Items.COPPER_INGOT).apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 10))))));
         add(GTEntities.TUFF_GOLEM.get(), LootTable.lootTable().withPool(
                 LootPool.lootPool().add(LootItem.lootTableItem(Blocks.TUFF).apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2))))));
+        add(GTEntities.CHEST_GOLEM.get(), LootTable.lootTable());
     }
 
     @Override

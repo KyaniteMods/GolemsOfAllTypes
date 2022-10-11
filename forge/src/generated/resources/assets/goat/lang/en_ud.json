@@ -1,7 +1,9 @@
 {
   "block.goat.copper_button": "uoʇʇnᗺ ɹǝddoƆ",
+  "entity.goat.chest_golem": "ɯǝןo⅁ ʇsǝɥƆ",
   "entity.goat.copper_golem": "ɯǝןo⅁ ɹǝddoƆ",
   "entity.goat.tuff_golem": "ɯǝןo⅁ ɟɟn⟘",
+  "item.goat.chest_golem_spawn_egg": "bbƎ uʍɐdS ɯǝןo⅁ ʇsǝɥƆ",
   "item.goat.copper_golem_spawn_egg": "bbƎ uʍɐdS ɯǝןo⅁ ɹǝddoƆ",
   "item.goat.tuff_golem_spawn_egg": "bbƎ uʍɐdS ɯǝןo⅁ ɟɟn⟘",
   "itemGroup.goat": "sǝdʎ⟘ ןןⱯ ɟo sɯǝןo⅁",

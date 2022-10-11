@@ -1,6 +1,7 @@
 package com.kyanite.goat.forge;
 
 import com.kyanite.goat.GolemsOfAllTypes;
+import com.kyanite.goat.client.rendering.ChestGolemRenderer;
 import com.kyanite.goat.client.rendering.CopperGolemRenderer;
 import com.kyanite.goat.client.rendering.TuffGolemRenderer;
 import com.kyanite.goat.platform.forge.RegistryHelperImpl;
@@ -40,6 +41,7 @@ public class GolemsOfAllTypesForge {
         RegistryHelperImpl.CONFIGURED_FEATURES.register(bus);
         RegistryHelperImpl.PLACED_FEATURES.register(bus);
         RegistryHelperImpl.BIOMES.register(bus);
+        RegistryHelperImpl.CONTAINERS.register(bus);
 
         bus.addListener(this::attributes);
 
@@ -68,6 +70,7 @@ public class GolemsOfAllTypesForge {
         public static void clientSetup(final FMLClientSetupEvent event) {
             EntityRenderers.register(GTEntities.COPPER_GOLEM.get(), CopperGolemRenderer::new);
             EntityRenderers.register(GTEntities.TUFF_GOLEM.get(), TuffGolemRenderer::new);
+            EntityRenderers.register(GTEntities.CHEST_GOLEM.get(), ChestGolemRenderer::new);
         }
     }
 }
