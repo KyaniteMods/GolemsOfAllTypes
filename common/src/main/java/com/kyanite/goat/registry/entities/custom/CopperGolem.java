@@ -292,6 +292,7 @@ public class CopperGolem extends AbstractGolem implements IAnimatable {
         public void tick() {
             super.tick();
             if(mob.blockPosition().getY() == blockPos.getY() && mob.distanceToSqr(blockPos.getX(), blockPos.getY(), blockPos.getZ()) < 3 && random.nextInt(0, 50) == 0) {
+                if(level.getBlockState(blockPos).isAir()) return;
                 GTButtonBlock buttonBlock = (GTButtonBlock) level.getBlockState(blockPos).getBlock();
                 if(level.getBlockState(blockPos).getValue(ButtonBlock.POWERED) == false) {
                     ((CopperGolem)mob).setPressTicks(20);
